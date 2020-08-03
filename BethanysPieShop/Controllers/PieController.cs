@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Threading.Tasks;
 
 namespace BethanysPieShop.Controllers
@@ -27,6 +28,14 @@ namespace BethanysPieShop.Controllers
             piesListViewModel.CurrentCategory = "Cheese cakes";
 
             return View(piesListViewModel);
+        }
+
+        public IActionResult Details(int id)
+        {
+            var pie = _pieRepository.GetPieById(id);
+            if (pie == null)
+                return NotFound();
+            return View(pie);
         }
 
 
