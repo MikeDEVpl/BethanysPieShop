@@ -36,7 +36,10 @@ namespace BethanysPieShop
             //Real repositories
             services.AddScoped<IPieRepository, PieRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
-            
+            services.AddScoped<ShoppingCart>(sp => ShoppingCart.GetCart(sp));
+            services.AddHttpContextAccessor();
+            services.AddSession();
+
             //AddScoped - jeden dla requestu
             //AddSingleton - one instance
             //AddTransient - ciagle nowa
@@ -56,6 +59,7 @@ namespace BethanysPieShop
             app.UseHttpsRedirection();
 
             app.UseStaticFiles(); //serwuje js i inne pliki bootstrap itd z folderu wwwroot
+            app.UseSession(); //musi byc przed routing
 
             app.UseRouting();
 
